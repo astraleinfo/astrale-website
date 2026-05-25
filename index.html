@@ -329,6 +329,8 @@ section:not(#hero){padding:5rem 4rem;}
         
 .phc-dental{background:linear-gradient(145deg,#03071a 0%,#080d2a 30%,#0c1440 60%,#091830 100%);}
 .phc-gym{background:linear-gradient(145deg,#030814 0%,#061225 30%,#0a1535 60%,#061028 100%);}
+.phc-beauty{background:linear-gradient(145deg,#0a0806 0%,#1a1208 30%,#1f1a0d 60%,#12100a 100%);}
+.phc-interior{background:linear-gradient(145deg,#080a06 0%,#101a0e 30%,#141f12 60%,#0d1410 100%);}
 
 .phc-bg-art{
   position:absolute;inset:0;overflow:hidden;
@@ -360,6 +362,48 @@ section:not(#hero){padding:5rem 4rem;}
   background:radial-gradient(ellipse,rgba(0,212,255,.1) 0%,transparent 65%);
   border-radius:50%;
 }
+.phc-beauty .phc-bg-art::before{
+  content:'';position:absolute;
+  top:-15%;right:-5%;
+  width:360px;height:360px;
+  background:radial-gradient(ellipse,rgba(212,175,55,.12) 0%,transparent 65%);
+  border-radius:50%;
+}
+.phc-beauty .phc-bg-art::after{
+  content:'';position:absolute;
+  bottom:-25px;left:-20px;
+  width:220px;height:220px;
+  background:radial-gradient(ellipse,rgba(212,175,55,.07) 0%,transparent 70%);
+  border-radius:50%;
+}
+.phc-beauty .phc-badge{color:#d4af37;background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.2);}
+.phc-beauty .phc-stat{border-color:rgba(212,175,55,.18);}
+.phc-beauty .phc-stat-num{color:#d4af37;}
+.phc-beauty .phc-circle{border-color:rgba(212,175,55,.08);}
+.phc-beauty .phc-grid{background-image:linear-gradient(rgba(212,175,55,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(212,175,55,.04) 1px,transparent 1px);}
+.phc-beauty .phc-visit-btn{color:#d4af37;background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.2);}
+.phc-beauty .phc-visit-btn:hover{background:rgba(212,175,55,.2);box-shadow:0 6px 18px rgba(212,175,55,.15);}
+.phc-interior .phc-bg-art::before{
+  content:'';position:absolute;
+  top:-10%;left:30%;
+  width:380px;height:380px;
+  background:radial-gradient(ellipse,rgba(139,160,120,.12) 0%,transparent 65%);
+  border-radius:50%;
+}
+.phc-interior .phc-bg-art::after{
+  content:'';position:absolute;
+  bottom:-30px;right:-15px;
+  width:240px;height:240px;
+  background:radial-gradient(ellipse,rgba(183,148,97,.08) 0%,transparent 70%);
+  border-radius:50%;
+}
+.phc-interior .phc-badge{color:#b7a078;background:rgba(183,160,120,.08);border-color:rgba(183,160,120,.2);}
+.phc-interior .phc-stat{border-color:rgba(183,160,120,.18);}
+.phc-interior .phc-stat-num{color:#b7a078;}
+.phc-interior .phc-circle{border-color:rgba(183,160,120,.08);}
+.phc-interior .phc-grid{background-image:linear-gradient(rgba(183,160,120,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(183,160,120,.04) 1px,transparent 1px);}
+.phc-interior .phc-visit-btn{color:#b7a078;background:rgba(183,160,120,.08);border-color:rgba(183,160,120,.2);}
+.phc-interior .phc-visit-btn:hover{background:rgba(183,160,120,.2);box-shadow:0 6px 18px rgba(183,160,120,.15);}
   /* Abstract decorative elements */
 
         
@@ -1148,6 +1192,84 @@ footer{background:var(--navy);border-top:1px solid var(--cyan-border);padding:3.
         </div>
         <div class="phc-title">IronPulse Fitness</div>
         <div class="phc-sub">High-energy gym & fitness centre — class schedules, trainer profiles, membership plans & transformation gallery.</div>
+        <div class="phc-footer">
+          <div class="phc-tech-stack">
+            <span class="phc-tech-pill">HTML/CSS</span>
+            <span class="phc-tech-pill">JavaScript</span>
+            <span class="phc-tech-pill">Netlify</span>
+          </div>
+          <span class="phc-visit-btn">Visit Site <i class="fas fa-arrow-up-right-from-square"></i></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Lumière Beauty -->
+    <a class="port-hero-card phc-beauty reveal stagger" href="https://lumiere-beauty-demo-site.netlify.app" target="_blank" rel="noopener">
+      <div class="phc-bg-art"></div>
+      <div class="phc-decor">
+        <div class="phc-circle" style="width:220px;height:220px;top:5%;right:10%;"></div>
+        <div class="phc-circle" style="width:140px;height:140px;bottom:15%;left:25%;"></div>
+        <div class="phc-grid"></div>
+      </div>
+      <div class="phc-screenshot">
+        <img src="asset/images/lumiere.png" alt="Lumière Beauty Screenshot">
+      </div>
+      <!-- Floating stats -->
+      <div class="phc-stat" style="top:1.2rem;left:1.5rem;animation-duration:4.5s;">
+        <div class="phc-stat-num">5000+</div>
+        <div class="phc-stat-lbl">Happy Clients</div>
+      </div>
+      <div class="phc-stat" style="top:4.5rem;right:52%;animation-duration:5.5s;animation-delay:-1s;">
+        <div class="phc-stat-num">4.9&#9733;</div>
+        <div class="phc-stat-lbl">Rating</div>
+      </div>
+      <div class="phc-content">
+        <div class="phc-badge-row">
+          <span class="phc-badge">Beauty & Wellness</span>
+          <span class="phc-badge">UI/UX</span>
+          <span class="phc-live-badge"><span class="phc-live-dot"></span>Live</span>
+        </div>
+        <div class="phc-title">LUMIÈRE — Maison de Beauté</div>
+        <div class="phc-sub">Luxury beauty salon — elegant dark theme with booking system, service showcase, gallery, artist profiles & VIP membership portal.</div>
+        <div class="phc-footer">
+          <div class="phc-tech-stack">
+            <span class="phc-tech-pill">HTML/CSS</span>
+            <span class="phc-tech-pill">JavaScript</span>
+            <span class="phc-tech-pill">Netlify</span>
+          </div>
+          <span class="phc-visit-btn">Visit Site <i class="fas fa-arrow-up-right-from-square"></i></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Rêve Interior Design -->
+    <a class="port-hero-card phc-interior reveal stagger" href="https://interior-design-demo-site.netlify.app" target="_blank" rel="noopener">
+      <div class="phc-bg-art"></div>
+      <div class="phc-decor">
+        <div class="phc-circle" style="width:200px;height:200px;top:8%;left:15%;"></div>
+        <div class="phc-circle" style="width:160px;height:160px;bottom:10%;right:20%;"></div>
+        <div class="phc-grid"></div>
+      </div>
+      <div class="phc-screenshot">
+        <img src="asset/images/interior.jpg" alt="Rêve Interior Design Screenshot">
+      </div>
+      <!-- Floating stats -->
+      <div class="phc-stat" style="top:1.2rem;left:1.5rem;animation-duration:5s;">
+        <div class="phc-stat-num">200+</div>
+        <div class="phc-stat-lbl">Projects</div>
+      </div>
+      <div class="phc-stat" style="top:4.5rem;right:52%;animation-duration:4.5s;animation-delay:-1.2s;">
+        <div class="phc-stat-num">10+</div>
+        <div class="phc-stat-lbl">Years</div>
+      </div>
+      <div class="phc-content">
+        <div class="phc-badge-row">
+          <span class="phc-badge">Interior Design</span>
+          <span class="phc-badge">Architecture</span>
+          <span class="phc-live-badge"><span class="phc-live-dot"></span>Live</span>
+        </div>
+        <div class="phc-title">Rêve — Interior Design Studio</div>
+        <div class="phc-sub">Premium interior design studio — immersive dark theme with project showcase, design philosophy, service categories & consultation booking.</div>
         <div class="phc-footer">
           <div class="phc-tech-stack">
             <span class="phc-tech-pill">HTML/CSS</span>
