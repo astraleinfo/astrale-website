@@ -594,10 +594,25 @@ section:not(#hero){padding:5rem 4rem;}
 .cform-group input:focus,.cform-group textarea:focus,.cform-group select:focus{border-color:rgba(0,212,255,.55);background:rgba(7,15,43,.9);}
 .cform-group select option{background:#070F2B;}
 .cform-group textarea{resize:vertical;min-height:110px;}
-.btn-submit{font-family:var(--font-body);font-size:.9rem;font-weight:500;padding:.82rem 2.2rem;background:var(--cyan);color:var(--navy);border:none;border-radius:40px;cursor:pointer;align-self:flex-start;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
+.btn-submit{font-family:var(--font-body);font-size:.9rem;font-weight:500;padding:.82rem 2.2rem;background:var(--cyan);color:var(--navy);border:none;border-radius:40px;cursor:pointer;align-self:flex-start;transition:transform .2s,box-shadow .2s,background .3s,opacity .3s;position:relative;overflow:hidden;}
 .btn-submit::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.15);transform:translateX(-100%) skewX(-15deg);transition:transform .4s ease;}
 .btn-submit:hover::before{transform:translateX(120%) skewX(-15deg);}
 .btn-submit:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,212,255,.3);}
+.btn-submit:disabled{opacity:.7;cursor:not-allowed;transform:none;}
+.btn-submit:disabled:hover{box-shadow:none;}
+.btn-submit:disabled::before{display:none;}
+.btn-submit.btn-success{background:var(--green);}
+.btn-submit.btn-error{background:#ff4757;color:#fff;}
+/* Toast notification */
+.form-toast{position:fixed;bottom:2rem;right:2rem;padding:1rem 1.6rem;border-radius:12px;font-family:var(--font-body);font-size:.88rem;font-weight:500;color:#fff;z-index:10000;transform:translateY(120px);opacity:0;transition:transform .4s cubic-bezier(.175,.885,.32,1.275),opacity .4s ease;pointer-events:none;display:flex;align-items:center;gap:.7rem;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,.3);max-width:400px;}
+.form-toast.show{transform:translateY(0);opacity:1;pointer-events:auto;}
+.form-toast.toast-success{background:rgba(0,255,136,.15);border:1px solid rgba(0,255,136,.35);}
+.form-toast.toast-error{background:rgba(255,71,87,.15);border:1px solid rgba(255,71,87,.35);}
+.form-toast .toast-icon{font-size:1.2rem;flex-shrink:0;}
+.form-toast.toast-success .toast-icon{color:#00ff88;}
+.form-toast.toast-error .toast-icon{color:#ff4757;}
+.btn-submit .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(7,15,43,.3);border-top-color:var(--navy);border-radius:50%;animation:spin .6s linear infinite;margin-right:.5rem;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
   /* === CTA STRIP === */
 
         
@@ -1435,30 +1450,30 @@ footer{background:var(--navy);border-top:1px solid var(--cyan-border);padding:3.
         <!-- <a class="soc-btn" href="#" title="Discord"><i class="fa-brands fa-discord"></i></a> -->
       </div>
     </div>
-    <div class="contact-form reveal-right">
+    <form id="contactForm" class="contact-form reveal-right" onsubmit="return false;">
       <div class="cform-row">
         <div class="cform-group">
-          <label>Full Name *</label>
-          <input type="text" placeholder="Your full name">
+          <label for="cf-name">Full Name *</label>
+          <input type="text" id="cf-name" placeholder="Your full name" required>
         </div>
         <div class="cform-group">
-          <label>Email Address *</label>
-          <input type="email" placeholder="you@company.com">
+          <label for="cf-email">Email Address *</label>
+          <input type="email" id="cf-email" placeholder="you@company.com" required>
         </div>
       </div>
       <div class="cform-row">
         <div class="cform-group">
-          <label>Phone Number</label>
-          <input type="tel" placeholder="+91 73059 61254">
+          <label for="cf-phone">Phone Number</label>
+          <input type="tel" id="cf-phone" placeholder="+91 73059 61254">
         </div>
         <div class="cform-group">
-          <label>Company Name</label>
-          <input type="text" placeholder="Your company">
+          <label for="cf-company">Company Name</label>
+          <input type="text" id="cf-company" placeholder="Your company">
         </div>
       </div>
       <div class="cform-group">
-        <label>Service Required</label>
-        <select>
+        <label for="cf-service">Service Required</label>
+        <select id="cf-service">
           <option value="">Select a service...</option>
           <option>Web Development</option>
           <option>Mobile App Development</option>
@@ -1470,11 +1485,11 @@ footer{background:var(--navy);border-top:1px solid var(--cyan-border);padding:3.
         </select>
       </div>
       <div class="cform-group">
-        <label>Project Brief *</label>
-        <textarea placeholder="Describe your project, goals, timeline, and budget range..."></textarea>
+        <label for="cf-message">Project Brief *</label>
+        <textarea id="cf-message" placeholder="Describe your project, goals, timeline, and budget range..." required></textarea>
       </div>
-      <button class="btn-submit" id="submitBtn">Send Message →</button>
-    </div>
+      <button type="submit" class="btn-submit" id="submitBtn">Send Message →</button>
+    </form>
   </div>
 </section>
 
@@ -1538,6 +1553,12 @@ footer{background:var(--navy);border-top:1px solid var(--cyan-border);padding:3.
   <i class="fas fa-arrow-up"></i>
 </button>
 
+<!-- Toast notification -->
+<div id="formToast" class="form-toast">
+  <span class="toast-icon"></span>
+  <span class="toast-msg"></span>
+</div>
+
 <script>
 // Loader
 const hideLoader=()=>{
@@ -1595,11 +1616,92 @@ const io=new IntersectionObserver((entries)=>{
 },{threshold:.08});
 revEls.forEach(el=>io.observe(el));
 
-// Form submit
-document.getElementById('submitBtn').addEventListener('click',function(){
-  this.textContent='✓ Message Sent!';
-  this.style.background='var(--green)';
-  setTimeout(()=>{this.innerHTML='Send Message →';this.style.background='var(--cyan)';},3000);
+// ── Google Sheets Form Integration ──
+// IMPORTANT: Replace this URL with your deployed Google Apps Script Web App URL
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcxtu9UE8Dm1bITZGmJDcM7b7u9RQ-doHwVfaeF9gss3MFx6SOqFpUhOumWFg7U2tS/exec';
+
+function showToast(type, message) {
+  const toast = document.getElementById('formToast');
+  const icon = toast.querySelector('.toast-icon');
+  const msg = toast.querySelector('.toast-msg');
+  toast.className = 'form-toast';
+  void toast.offsetWidth; // force reflow for re-trigger
+  toast.classList.add('show', type === 'success' ? 'toast-success' : 'toast-error');
+  icon.innerHTML = type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-circle"></i>';
+  msg.textContent = message;
+  setTimeout(() => { toast.classList.remove('show'); }, 5000);
+}
+
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const btn = document.getElementById('submitBtn');
+  const name    = document.getElementById('cf-name').value.trim();
+  const email   = document.getElementById('cf-email').value.trim();
+  const phone   = document.getElementById('cf-phone').value.trim();
+  const company = document.getElementById('cf-company').value.trim();
+  const service = document.getElementById('cf-service').value;
+  const message = document.getElementById('cf-message').value.trim();
+
+  // Validation
+  if (!name || !email || !message) {
+    showToast('error', 'Please fill in all required fields (Name, Email, Project Brief).');
+    return;
+  }
+
+  // Email format check
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showToast('error', 'Please enter a valid email address.');
+    return;
+  }
+
+  // Show loading state
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Sending...';
+
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        phone,
+        company,
+        service,
+        message
+      })
+    });
+
+    // With no-cors mode, we can't read the response, so we assume success
+    // if no network error was thrown
+    btn.innerHTML = '✓ Message Sent!';
+    btn.classList.add('btn-success');
+    showToast('success', 'Your message has been sent successfully! We\'ll get back to you within 24 hours.');
+
+    // Clear form
+    document.getElementById('contactForm').reset();
+
+    // Reset button after 4 seconds
+    setTimeout(() => {
+      btn.innerHTML = 'Send Message →';
+      btn.classList.remove('btn-success');
+      btn.disabled = false;
+    }, 4000);
+
+  } catch (error) {
+    btn.innerHTML = '✕ Failed to Send';
+    btn.classList.add('btn-error');
+    showToast('error', 'Something went wrong. Please try again or email us directly at astraleinfo@gmail.com');
+
+    setTimeout(() => {
+      btn.innerHTML = 'Send Message →';
+      btn.classList.remove('btn-error');
+      btn.disabled = false;
+    }, 4000);
+  }
 });
 
 // Nav active
